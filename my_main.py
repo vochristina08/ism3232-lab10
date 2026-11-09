@@ -3,6 +3,7 @@
 
 from my_assistant import GroomingAssistant
 from my_tool import GroomingSchedule
+from ollama_model import OllamaModel
 
 AVAILABLE_TIMES = {
     "monday": "9:00 am and 1:30 pm",
@@ -12,12 +13,14 @@ AVAILABLE_TIMES = {
 
 grooming_schedule = GroomingSchedule(AVAILABLE_TIMES)
 
+model = OllamaModel("granite4.1:3b")
+
 assistant = GroomingAssistant(
     "Bella",
     "You help customers find available pet grooming appointments.",
     grooming_schedule,
+    model,
 )
-
 print("Type a message, or type quit to stop.")
 user_message = input("You: ")
 

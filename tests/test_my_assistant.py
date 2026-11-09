@@ -1,6 +1,7 @@
 # tests/test_my_assistant.py
 # Author: Christina Vo
 
+from mock_model import MockModel
 from my_assistant import GroomingAssistant
 from my_tool import GroomingSchedule
 
@@ -14,7 +15,7 @@ def make_assistant():
             "friday": "11:00 am",
         }
     )
-    return GroomingAssistant("Bella", "Be helpful.", schedule)
+    return GroomingAssistant("Bella", "Be helpful.", schedule, MockModel())
 
 
 def test_available_times_uses_tool():

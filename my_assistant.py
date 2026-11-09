@@ -7,11 +7,11 @@ HANDOFF_WORDS = ["book", "cancel", "reschedule"]
 class GroomingAssistant:
     """A mock assistant for a pet grooming business."""
 
-    def __init__(self, name, instructions, grooming_schedule):
-        """Store the assistant's details, tool, and conversation history."""
+    def __init__(self, name, instructions, grooming_schedule, model):
         self.name = name
         self.instructions = instructions
         self.grooming_schedule = grooming_schedule
+        self.model = model
         self.history = []
 
     def respond(self, user_message):
@@ -37,10 +37,14 @@ class GroomingAssistant:
                 "I can check available pet grooming appointments."
             )
 
-        return (
-            "I'm not sure how to help with that. "
-            "I can check available grooming appointments."
-        )
+        return self.model_reply()
+
+    def model_reply(self):
+        """Ask the model for a reply or give a safe fallback."""
+        reply = self.model.reply(self.instructions, self.history)
+        if reply is None:
+            return "I'm not sure how to help with that."
+        return reply
 
     def needs_human(self, text):
         """Identify requests that require a staff member."""
